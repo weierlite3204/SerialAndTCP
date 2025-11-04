@@ -413,6 +413,7 @@ Makefile: ..\..\SerialAndTCP.pro ..\..\..\..\6.8.3\msvc2022_64\mkspecs\features\
 		..\..\..\..\6.8.3\msvc2022_64\mkspecs\features\qt_config.prf \
 		..\..\..\..\6.8.3\msvc2022_64\mkspecs\win32-msvc\qmake.conf \
 		..\..\..\..\6.8.3\msvc2022_64\mkspecs\features\spec_post.prf \
+		.qmake.stash \
 		..\..\..\..\6.8.3\msvc2022_64\mkspecs\features\exclusive_builds.prf \
 		..\..\..\..\6.8.3\msvc2022_64\mkspecs\common\msvc-version.conf \
 		..\..\..\..\6.8.3\msvc2022_64\mkspecs\features\toolchain.prf \
@@ -439,14 +440,25 @@ Makefile: ..\..\SerialAndTCP.pro ..\..\..\..\6.8.3\msvc2022_64\mkspecs\features\
 		..\..\..\..\6.8.3\msvc2022_64\mkspecs\features\yacc.prf \
 		..\..\..\..\6.8.3\msvc2022_64\mkspecs\features\lex.prf \
 		..\..\SerialAndTCP.pro \
+		..\..\..\..\6.8.3\msvc2022_64\lib\Qt6Charts.prl \
+		..\..\..\..\6.8.3\msvc2022_64\lib\Qt6OpenGLWidgets.prl \
 		..\..\..\..\6.8.3\msvc2022_64\lib\Qt6Widgets.prl \
+		..\..\..\..\6.8.3\msvc2022_64\lib\Qt6OpenGL.prl \
 		..\..\..\..\6.8.3\msvc2022_64\lib\Qt6Gui.prl \
+		..\..\..\..\6.8.3\msvc2022_64\lib\Qt6Sql.prl \
+		..\..\..\..\6.8.3\msvc2022_64\lib\Qt6Network.prl \
+		..\..\..\..\6.8.3\msvc2022_64\lib\Qt6SerialPort.prl \
 		..\..\..\..\6.8.3\msvc2022_64\lib\Qt6Core.prl \
 		..\..\..\..\6.8.3\msvc2022_64\lib\Qt6EntryPoint.prl \
-		.qmake.stash \
 		..\..\..\..\6.8.3\msvc2022_64\mkspecs\features\build_pass.prf \
+		..\..\..\..\6.8.3\msvc2022_64\lib\Qt6Chartsd.prl \
+		..\..\..\..\6.8.3\msvc2022_64\lib\Qt6OpenGLWidgetsd.prl \
 		..\..\..\..\6.8.3\msvc2022_64\lib\Qt6Widgetsd.prl \
+		..\..\..\..\6.8.3\msvc2022_64\lib\Qt6OpenGLd.prl \
 		..\..\..\..\6.8.3\msvc2022_64\lib\Qt6Guid.prl \
+		..\..\..\..\6.8.3\msvc2022_64\lib\Qt6Sqld.prl \
+		..\..\..\..\6.8.3\msvc2022_64\lib\Qt6Networkd.prl \
+		..\..\..\..\6.8.3\msvc2022_64\lib\Qt6SerialPortd.prl \
 		..\..\..\..\6.8.3\msvc2022_64\lib\Qt6Cored.prl \
 		..\..\..\..\6.8.3\msvc2022_64\lib\Qt6EntryPointd.prl
 	$(QMAKE) -o Makefile ..\..\SerialAndTCP.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
@@ -779,6 +791,7 @@ Makefile: ..\..\SerialAndTCP.pro ..\..\..\..\6.8.3\msvc2022_64\mkspecs\features\
 ..\..\..\..\6.8.3\msvc2022_64\mkspecs\features\qt_config.prf:
 ..\..\..\..\6.8.3\msvc2022_64\mkspecs\win32-msvc\qmake.conf:
 ..\..\..\..\6.8.3\msvc2022_64\mkspecs\features\spec_post.prf:
+.qmake.stash:
 ..\..\..\..\6.8.3\msvc2022_64\mkspecs\features\exclusive_builds.prf:
 ..\..\..\..\6.8.3\msvc2022_64\mkspecs\common\msvc-version.conf:
 ..\..\..\..\6.8.3\msvc2022_64\mkspecs\features\toolchain.prf:
@@ -805,14 +818,25 @@ Makefile: ..\..\SerialAndTCP.pro ..\..\..\..\6.8.3\msvc2022_64\mkspecs\features\
 ..\..\..\..\6.8.3\msvc2022_64\mkspecs\features\yacc.prf:
 ..\..\..\..\6.8.3\msvc2022_64\mkspecs\features\lex.prf:
 ..\..\SerialAndTCP.pro:
+..\..\..\..\6.8.3\msvc2022_64\lib\Qt6Charts.prl:
+..\..\..\..\6.8.3\msvc2022_64\lib\Qt6OpenGLWidgets.prl:
 ..\..\..\..\6.8.3\msvc2022_64\lib\Qt6Widgets.prl:
+..\..\..\..\6.8.3\msvc2022_64\lib\Qt6OpenGL.prl:
 ..\..\..\..\6.8.3\msvc2022_64\lib\Qt6Gui.prl:
+..\..\..\..\6.8.3\msvc2022_64\lib\Qt6Sql.prl:
+..\..\..\..\6.8.3\msvc2022_64\lib\Qt6Network.prl:
+..\..\..\..\6.8.3\msvc2022_64\lib\Qt6SerialPort.prl:
 ..\..\..\..\6.8.3\msvc2022_64\lib\Qt6Core.prl:
 ..\..\..\..\6.8.3\msvc2022_64\lib\Qt6EntryPoint.prl:
-.qmake.stash:
 ..\..\..\..\6.8.3\msvc2022_64\mkspecs\features\build_pass.prf:
+..\..\..\..\6.8.3\msvc2022_64\lib\Qt6Chartsd.prl:
+..\..\..\..\6.8.3\msvc2022_64\lib\Qt6OpenGLWidgetsd.prl:
 ..\..\..\..\6.8.3\msvc2022_64\lib\Qt6Widgetsd.prl:
+..\..\..\..\6.8.3\msvc2022_64\lib\Qt6OpenGLd.prl:
 ..\..\..\..\6.8.3\msvc2022_64\lib\Qt6Guid.prl:
+..\..\..\..\6.8.3\msvc2022_64\lib\Qt6Sqld.prl:
+..\..\..\..\6.8.3\msvc2022_64\lib\Qt6Networkd.prl:
+..\..\..\..\6.8.3\msvc2022_64\lib\Qt6SerialPortd.prl:
 ..\..\..\..\6.8.3\msvc2022_64\lib\Qt6Cored.prl:
 ..\..\..\..\6.8.3\msvc2022_64\lib\Qt6EntryPointd.prl:
 qmake: FORCE
