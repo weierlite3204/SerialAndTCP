@@ -40,7 +40,92 @@ void Widget::do_msgnewConnection(qintptr socket)//处理客户端msgsocket的连
 
 void Widget::initCharts()
 {
-
+    // 清除frame的布局（如果有）
+    QLayout *oldLayout1 = ui->charFrame1->layout();
+    if (oldLayout1) {
+        delete oldLayout1;
+    }
+    
+    QLayout *oldLayout2 = ui->charFrame2->layout();
+    if (oldLayout2) {
+        delete oldLayout2;
+    }
+    
+    // ===== 初始化第一个图表（空气温度、湿度、氧气） =====
+    customPlot1 = new QCustomPlot(ui->charFrame1);
+    
+    // 添加三条曲线
+    customPlot1->addGraph(); // 空气温度
+    customPlot1->addGraph(); // 空气湿度
+    customPlot1->addGraph(); // 氧气浓度
+    
+    // 设置曲线颜色和名称
+    customPlot1->graph(0)->setPen(QPen(Qt::blue));
+    customPlot1->graph(0)->setName("空气温度");
+    customPlot1->graph(1)->setPen(QPen(Qt::green));
+    customPlot1->graph(1)->setName("空气湿度");
+    customPlot1->graph(2)->setPen(QPen(Qt::red));
+    customPlot1->graph(2)->setName("氧气含量");
+    
+    // 设置坐标轴
+    customPlot1->xAxis->setLabel("time(see)");
+    customPlot1->yAxis->setLabel("");
+    customPlot1->yAxis->setRange(0, 100);
+    
+    // 设置X轴为时间轴
+    QSharedPointer<QCPAxisTickerDateTime> timeTicker1(new QCPAxisTickerDateTime);
+    timeTicker1->setDateTimeFormat("HH:mm:ss");
+    timeTicker1->setDateTimeSpec(Qt::LocalTime);
+    customPlot1->xAxis->setTicker(timeTicker1);
+    
+    // 启用图例
+    customPlot1->legend->setVisible(true);
+    
+    // 设置抗锯齿
+    customPlot1->setAntialiasedElements(QCP::aeAll);
+    
+    // 将图表添加到frame1
+    QVBoxLayout *layout1 = new QVBoxLayout(ui->charFrame1);
+    layout1->setContentsMargins(0, 0, 0, 0);
+    layout1->addWidget(customPlot1);
+    
+    // ===== 初始化第二个图表（土壤温度、湿度、光照） =====
+    customPlot2 = new QCustomPlot(ui->charFrame2);
+    
+    // 添加三条曲线
+    customPlot2->addGraph(); // 土壤温度
+    customPlot2->addGraph(); // 土壤湿度
+    customPlot2->addGraph(); // 光照强度
+    
+    // 设置曲线颜色和名称
+    customPlot2->graph(0)->setPen(QPen(Qt::blue));
+    customPlot2->graph(0)->setName("土壤温度");
+    customPlot2->graph(1)->setPen(QPen(Qt::green));
+    customPlot2->graph(1)->setName("土壤湿度");
+    customPlot2->graph(2)->setPen(QPen(Qt::yellow));
+    customPlot2->graph(2)->setName("光照");
+    
+    // 设置坐标轴
+    customPlot2->xAxis->setLabel("time(see)");
+    customPlot2->yAxis->setLabel("");
+    customPlot2->yAxis->setRange(0, 100);
+    
+    // 设置X轴为时间轴
+    QSharedPointer<QCPAxisTickerDateTime> timeTicker2(new QCPAxisTickerDateTime);
+    timeTicker2->setDateTimeFormat("HH:mm:ss");
+    timeTicker2->setDateTimeSpec(Qt::LocalTime);
+    customPlot2->xAxis->setTicker(timeTicker2);
+    
+    // 启用图例
+    customPlot2->legend->setVisible(true);
+    
+    // 设置抗锯齿
+    customPlot2->setAntialiasedElements(QCP::aeAll);
+    
+    // 将图表添加到frame2
+    QVBoxLayout *layout2 = new QVBoxLayout(ui->charFrame2);
+    layout2->setContentsMargins(0, 0, 0, 0);
+    layout2->addWidget(customPlot2);
 }
 
 void Widget::showdata(SensorData data)
@@ -53,12 +138,91 @@ void Widget::showdata(SensorData data)
     ui->soilwater->setText(QString::number(data.shumi2, 'f', 1) + "%"); // 土壤含水量
     ui->ray->setText(QString::number(data.light, 'f', 1) + "%");       // 光照强度
     
-
+    // 获取当前时间
+    double currentTime = QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000.0;
+    
+    // 添加数据到第一个图表
+    timeData1.append(currentTime);
+    tempData.append(data.atemp);
+    humidityData.append(data.ahumi);
+    oxygenData.append(data.oxygen);
+    
+    // 添加数据到第二个图表
+    timeData2.append(currentTime);
+    soilTempData.append(data.stemp);
+    soilHumidityData.append(data.shumi2);
+    lightData.append(data.light);
+    
+    // 限制数据点数量
+    if (timeData1.size() > maxDataPoints) {
+        timeData1.removeFirst();
+        tempData.removeFirst();
+        humidityData.removeFirst();
+        oxygenData.removeFirst();
+    }
+    
+    if (timeData2.size() > maxDataPoints) {
+        timeData2.removeFirst();
+        soilTempData.removeFirst();
+        soilHumidityData.removeFirst();
+        lightData.removeFirst();
+    }
+    
+    // 更新曲线数据
+    customPlot1->graph(0)->setData(timeData1, tempData);
+    customPlot1->graph(1)->setData(timeData1, humidityData);
+    customPlot1->graph(2)->setData(timeData1, oxygenData);
+    
+    customPlot2->graph(0)->setData(timeData2, soilTempData);
+    customPlot2->graph(1)->setData(timeData2, soilHumidityData);
+    customPlot2->graph(2)->setData(timeData2, lightData);
+    
+    // 更新X轴范围
+    if (!timeData1.isEmpty()) {
+        double minTime = timeData1.first() - 1;
+        double maxTime = timeData1.last() + 1;
+        customPlot1->xAxis->setRange(minTime, maxTime);
+    }
+    
+    if (!timeData2.isEmpty()) {
+        double minTime = timeData2.first() - 1;
+        double maxTime = timeData2.last() + 1;
+        customPlot2->xAxis->setRange(minTime, maxTime);
+    }
+    
+    // 确保坐标轴标签可见
+    customPlot1->axisRect()->setupFullAxesBox();
+    customPlot2->axisRect()->setupFullAxesBox();
+    
+    // 重绘图表
+    customPlot1->replot(QCustomPlot::rpQueuedReplot);
+    customPlot2->replot(QCustomPlot::rpQueuedReplot);
 }
 
 Widget::~Widget()
 {
-
+    // 确保在释放图表前清除数据
+    if (customPlot1) {
+        customPlot1->clearGraphs();
+        delete customPlot1;
+        customPlot1 = nullptr;
+    }
+    
+    if (customPlot2) {
+        customPlot2->clearGraphs();
+        delete customPlot2;
+        customPlot2 = nullptr;
+    }
+    
+    // 清除数据向量
+    timeData1.clear();
+    tempData.clear();
+    humidityData.clear();
+    oxygenData.clear();
+    timeData2.clear();
+    soilTempData.clear();
+    soilHumidityData.clear();
+    lightData.clear();
     
     delete ui;
 }
