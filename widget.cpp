@@ -1,5 +1,7 @@
 ﻿#include "widget.h"
 #include "ui_widget.h"
+#include <QNetworkInterface>
+#include <QMessageBox>
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
@@ -14,8 +16,31 @@ Widget::Widget(QWidget *parent)
     // 连接服务器的newDescriptor信号到Widget的do_msgnewConnection槽函数
     connect(msgserver, &MyTcpServer::newDescriptor, this, &Widget::do_msgnewConnection);
     
+    // 获取并显示本地IPv4地址，便于复制连接
+    QString ipAddress = "";
+    QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
+    
+    // 寻找第一个非环回IPv4地址
+    for (int i = 0; i < ipAddressesList.size(); ++i) {
+        if (ipAddressesList.at(i) != QHostAddress::LocalHost &&
+            ipAddressesList.at(i).toIPv4Address()) {
+            ipAddress = ipAddressesList.at(i).toString();
+            break;
+        }
+    }
+    
+    // 如果没有找到非环回地址，使用环回地址
+    if (ipAddress.isEmpty()) {
+        ipAddress = QHostAddress(QHostAddress::LocalHost).toString();
+    }
+    
+    // 设置iplineEdit为可复制的IP地址
+    ui->iplineEdit->setText(ipAddress);
+    ui->iplineEdit->setReadOnly(true); 
+    
     // 初始化图表
     initCharts();
+    
 }
 
 //有客户端连接到消息服务器
@@ -25,10 +50,15 @@ void Widget::do_msgnewConnection(qintptr socket)//处理客户端msgsocket的连
     MsgWorker *worker=new MsgWorker(socket);//初始化客户端线程
     worker->start();//因为继承了QThread，这里启动线程，启动run（）函数
     
+    // 连接成功，更新连接状态标签为"已连接"
+    ui->connectlab->setText("已连接");
+    
     // 连接worker的deletethread信号到线程安全销毁的lambda
-    connect(worker,&MsgWorker::deletethread,this,[worker](){
+    connect(worker,&MsgWorker::deletethread,this,[this, worker](){
         worker->wait();// 主线程等待子线程安全退出
         worker->deleteLater();// 安全释放线程对象
+        // 连接断开，更新连接状态标签为"未连接"
+        ui->connectlab->setText("未连接");
         qDebug()<<"成功删除通信线程"<<'\n';
     });
     
