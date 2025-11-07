@@ -15,6 +15,7 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QTextBrowser>
+#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -25,13 +26,13 @@ class Ui_debugging
 public:
     QHBoxLayout *horizontalLayout;
     QVBoxLayout *verticalLayout;
-    QTextBrowser *textsend;
-    QTextBrowser *textBrowser2;
+    QTextBrowser *textreceive;
+    QTextEdit *textsend;
     QVBoxLayout *verticalLayout_2;
     QPushButton *exitbutton;
     QSpacerItem *verticalSpacer;
     QPushButton *updeleteall;
-    QPushButton *downdateleall;
+    QPushButton *downdeleteall;
     QPushButton *sendbtn;
 
     void setupUi(QWidget *debugging)
@@ -43,18 +44,19 @@ public:
         horizontalLayout->setObjectName("horizontalLayout");
         verticalLayout = new QVBoxLayout();
         verticalLayout->setObjectName("verticalLayout");
-        textsend = new QTextBrowser(debugging);
+        textreceive = new QTextBrowser(debugging);
+        textreceive->setObjectName("textreceive");
+        textreceive->setMaximumSize(QSize(16777215, 500));
+
+        verticalLayout->addWidget(textreceive);
+
+        textsend = new QTextEdit(debugging);
         textsend->setObjectName("textsend");
-        textsend->setMaximumSize(QSize(16777215, 500));
 
         verticalLayout->addWidget(textsend);
 
-        textBrowser2 = new QTextBrowser(debugging);
-        textBrowser2->setObjectName("textBrowser2");
-        textBrowser2->setMaximumSize(QSize(16777215, 150));
-
-        verticalLayout->addWidget(textBrowser2);
-
+        verticalLayout->setStretch(0, 5);
+        verticalLayout->setStretch(1, 1);
 
         horizontalLayout->addLayout(verticalLayout);
 
@@ -75,10 +77,10 @@ public:
 
         verticalLayout_2->addWidget(updeleteall);
 
-        downdateleall = new QPushButton(debugging);
-        downdateleall->setObjectName("downdateleall");
+        downdeleteall = new QPushButton(debugging);
+        downdeleteall->setObjectName("downdeleteall");
 
-        verticalLayout_2->addWidget(downdateleall);
+        verticalLayout_2->addWidget(downdeleteall);
 
         sendbtn = new QPushButton(debugging);
         sendbtn->setObjectName("sendbtn");
@@ -99,7 +101,7 @@ public:
         debugging->setWindowTitle(QCoreApplication::translate("debugging", "Form", nullptr));
         exitbutton->setText(QCoreApplication::translate("debugging", "\351\200\200\345\207\272", nullptr));
         updeleteall->setText(QCoreApplication::translate("debugging", "\344\270\212\346\270\205\345\261\217", nullptr));
-        downdateleall->setText(QCoreApplication::translate("debugging", "\344\270\213\346\270\205\345\261\217", nullptr));
+        downdeleteall->setText(QCoreApplication::translate("debugging", "\344\270\213\346\270\205\345\261\217", nullptr));
         sendbtn->setText(QCoreApplication::translate("debugging", "\345\217\221\351\200\201", nullptr));
     } // retranslateUi
 

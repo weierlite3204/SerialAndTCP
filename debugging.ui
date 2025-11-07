@@ -15,9 +15,9 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout">
+    <layout class="QVBoxLayout" name="verticalLayout" stretch="5,1">
      <item>
-      <widget class="QTextBrowser" name="textsend">
+      <widget class="QTextBrowser" name="textreceive">
        <property name="maximumSize">
         <size>
          <width>16777215</width>
@@ -27,14 +27,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QTextBrowser" name="textBrowser2">
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>150</height>
-        </size>
-       </property>
-      </widget>
+      <widget class="QTextEdit" name="textsend"/>
      </item>
     </layout>
    </item>
@@ -71,7 +64,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="downdateleall">
+      <widget class="QPushButton" name="downdeleteall">
        <property name="text">
         <string>下清屏</string>
        </property>

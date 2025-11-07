@@ -4,6 +4,7 @@
 #include <QObject>
 #include<QThread>
 #include<QTcpSocket>
+#include "sensordata.h"
 
 class MsgWorker : public QThread
 {
@@ -23,13 +24,18 @@ protected:
     void run()override;
 
 private:
-    void managejson(QByteArray data,QTcpSocket *msgtcp);
+    void managejson(QByteArray data,QTcpSocket *msgtcp);//解析数据
 
-public:signals:
+signals:
     void deletethread();//要销毁线程
+    void rawdata(QString);//发送原始数据在调试窗口
+    void showsensordata(SensorData);//将接收到的数据，在界面上展示出来
 
 private slots:
-    void msgreaddata(QTcpSocket *msgtcp);
+    void msgreaddata(QTcpSocket *msgtcp);//读取数据
+
+public slots:
+    void sendstrdata(QByteArray data);//发送数据
 };
 
 #endif // MSGWORKER_H

@@ -4,6 +4,8 @@
 #include <QWidget>
 #include "mytcpserver.h"
 #include "msgworker.h"
+#include "debugging.h"
+#include "sensordata.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -23,8 +25,10 @@ private:
     Ui::Widget *ui;
     unsigned int port=1210;//端口号
     MyTcpServer *msgserver=NULL;//tcp服务
+    debugging *deb=NULL;//调试窗口
 
 private slots:
-    void do_msgnewConnection(qintptr socket);
+    void do_msgnewConnection(qintptr socket);//有客户端连接到消息服务器
+    void showdata(SensorData);//把接收到的数据在ui界面中展示出来
 };
 #endif // WIDGET_H

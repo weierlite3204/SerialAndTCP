@@ -14,7 +14,6 @@ SOURCES += \
     msgworker.cpp \
     mysql.cpp \
     mytcpserver.cpp \
-    tcpdata.cpp \
     widget.cpp
 
 HEADERS += \
@@ -22,7 +21,7 @@ HEADERS += \
     msgworker.h \
     mysql.h \
     mytcpserver.h \
-    tcpdata.h \
+    sensordata.h \
     widget.h
 
 FORMS += \
