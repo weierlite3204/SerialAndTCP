@@ -1,4 +1,4 @@
-﻿#include "widget.h"
+#include "widget.h"
 #include "ui_widget.h"
 #include <QNetworkInterface>
 #include <QMessageBox>
@@ -170,10 +170,16 @@ void Widget::init()
     //当端口行编辑完成之后，更改服务器监听的端口
     connect(ui->portlineEdit,&QLineEdit::editingFinished,this,&Widget::portchange);
     // 连接滑动条值变化信号到lambda函数，更新raylabel显示
-    connect(ui->raySlider, &QSlider::valueChanged, [=](int value) {
+    connect(ui->raySlider, &QSlider::valueChanged, [this](int value) {
         // 将0-1950映射到50-2000 μmol/m²
         int mappedValue = 50 + value;
-        ui->raylabel->setText(QString::number(mappedValue) + " μmol/m²");
+        QString rayText = QString::number(mappedValue) + " μmol/m²";
+        ui->raylabel->setText(rayText);
+        
+        // 如果灯是开着的，同步更新lightbtn的文本
+        if (light) {
+            ui->lightbtn->setText(rayText);
+        }
     });
 }
 
@@ -295,7 +301,63 @@ void Widget::portchange()
 
 void Widget::on_lightbtn_clicked()
 {
+    // 切换灯的状态
+    light = !light;
+    
+    if (light) {
+        // 开灯状态：按钮文本显示当前光照强度
+        QString rayLabelText = ui->raylabel->text();
+        ui->lightbtn->setText(rayLabelText);
+        
+        // 这里可以添加实际控制开灯的代码，例如发送指令到下位机
+    } else {
+        // 关灯状态：按钮文本显示"开灯"
+        ui->lightbtn->setText("开灯");
+        
+        // 这里可以添加实际控制关灯的代码，例如发送指令到下位机
+    }
+}
 
+void Widget::on_waterbtn_clicked()
+{
+    // 切换浇水状态
+    water = !water;
+    
+    if (water) {
+        // 开始浇水
+        ui->waterbtn->setText("关水");
+        
+        // 获取waterspinBox中设置的秒数
+        int seconds = ui->waterspinBox->value();
+        
+        // 设置定时器，在指定秒数后自动关水
+        QTimer::singleShot(seconds * 1000, this, [this]() {
+            if (water) { // 只有在仍然浇水状态时才执行自动关水
+                water = false;
+                ui->waterbtn->setText("浇水");
+                // 这里可以添加实际控制关水的代码，例如发送指令到下位机
+            }
+        });
+        
+        // 这里可以添加实际控制浇水的代码，例如发送指令到下位机
+    } else {
+        // 停止浇水
+        ui->waterbtn->setText("浇水");
+        // 这里可以添加实际控制关水的代码，例如发送指令到下位机
+    }
+}
+
+void Widget::on_exitbtn_clicked()
+{
+    // 如果正在浇水，立即关水
+    if (water) {
+        water = false;
+        ui->waterbtn->setText("浇水");
+        // 这里可以添加实际控制关水的代码，例如发送指令到下位机
+    }
+    
+    // 退出整个系统
+    QApplication::quit();
 }
 
 Widget::~Widget()

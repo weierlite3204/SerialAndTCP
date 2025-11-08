@@ -23,7 +23,7 @@ class Widget : public QWidget
     Q_OBJECT
 
 public:
-    Widget(QWidget *parent = nullptr);
+    explicit Widget(QWidget *parent = nullptr);
     ~Widget();
 
 private:
@@ -31,6 +31,7 @@ private:
     unsigned int port=1210;//端口号
     MyTcpServer *msgserver=NULL;//tcp服务
     debugging *deb=NULL;//调试窗口
+    bool light = false;//开关灯
     bool water = false;//浇水
 
     // 图表相关成员变量
