@@ -293,6 +293,11 @@ void Widget::portchange()
     }
 }
 
+void Widget::on_lightbtn_clicked()
+{
+
+}
+
 Widget::~Widget()
 {
     // 确保在释放图表前清除数据
