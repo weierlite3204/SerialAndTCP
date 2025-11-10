@@ -1,4 +1,4 @@
-// mysql.cpp - MySQL数据库连接与管理界面实现
+﻿// mysql.cpp - MySQL数据库连接与管理界面实现
 // 负责管理数据库连接界面和与DatabaseWorker的交互，
 // 使用多线程方式处理数据库操作，确保UI界面的响应性。
 
@@ -111,7 +111,18 @@ void Mysql::on_queryResultsReady(bool success, const QList<QVariantList> &result
         const QVariantList &rowData = results.at(row);
         
         for (int col = 0; col < qMin(rowData.size(), 8); ++col) {
-            QTableWidgetItem *item = new QTableWidgetItem(rowData.at(col).toString());
+            QString displayText;
+            
+            // 如果是采集时间列（第2列，索引1），格式化时间
+            if (col == 1 && rowData.at(col).canConvert<QDateTime>()) {
+                QDateTime dateTime = rowData.at(col).toDateTime();
+                // 确保使用本地时间并格式化
+                displayText = dateTime.toLocalTime().toString("yyyy-MM-dd HH:mm:ss");
+            } else {
+                displayText = rowData.at(col).toString();
+            }
+            
+            QTableWidgetItem *item = new QTableWidgetItem(displayText);
             ui->datetable->setItem(row, col, item);
         }
     }
@@ -164,7 +175,7 @@ void Mysql::on_exit_clicked()
 {
     this->hide();
 }
-
+//显示所有数据
 void Mysql::on_showall_clicked()
 {
     qDebug() << "[Mysql] showall按钮被点击";
@@ -180,5 +191,154 @@ void Mysql::on_showall_clicked()
     } else {
         qDebug() << "[Mysql] 数据库工作线程不可用";
         ui->status->setText("数据库工作线程不可用");
+    }
+}
+//清空表格中的数据
+void Mysql::on_deleteall_clicked()
+{
+    qDebug() << "[Mysql] deleteall按钮被点击";
+    // 清空表格
+    ui->datetable->clear();
+    ui->datetable->setRowCount(0);
+    ui->datetable->setColumnCount(8);
+    
+    QStringList headers;
+    headers << "ID" << "采集时间" << "空气温度" << "空气湿度" 
+            << "氧气含量" << "土壤温度" << "土壤湿度" << "光照强度";
+    ui->datetable->setHorizontalHeaderLabels(headers);
+    
+    ui->status->setText("已清空数据");
+}
+
+// 查询按钮点击事件处理
+void Mysql::on_inquire_clicked()
+{
+    qDebug() << "[Mysql] 时间查询按钮被点击";
+    
+    // 获取开始和结束时间
+    QDateTime startTime = ui->dateTimeON->dateTime();
+    QDateTime endTime = ui->dateTimeOFF->dateTime();
+    
+    // 验证时间范围
+    if (startTime > endTime) {
+        ui->status->setText("错误：开始时间不能晚于结束时间");
+        ui->status->setStyleSheet("color: red;");
+        return;
+    }
+    
+    // 使用数据库工作线程进行时间范围查询
+    if (dbWorker && dbThread && dbThread->isRunning()) {
+        ui->status->setText("正在查询数据...");
+        
+        // 使用信号槽机制调用数据库工作线程的查询方法
+        QMetaObject::invokeMethod(dbWorker, "queryGreenhouseDataByTimeRange", 
+                                 Qt::QueuedConnection,
+                                 Q_ARG(QDateTime, startTime),
+                                 Q_ARG(QDateTime, endTime));
+    } else {
+        ui->status->setText("数据库工作线程不可用");
+        ui->status->setStyleSheet("color: red;");
+    }
+}
+
+// 现在时间按钮点击事件处理
+void Mysql::on_nowtime_clicked()
+{
+    qDebug() << "[Mysql] 现在时间按钮被点击";
+    
+    // 设置结束时间为当前时间
+    ui->dateTimeOFF->setDateTime(QDateTime::currentDateTime());
+}
+
+// 最近一天查询按钮点击事件处理
+void Mysql::on_oneday_clicked()
+{
+    qDebug() << "[Mysql] 最近一天按钮被点击";
+    
+    QDateTime endTime = QDateTime::currentDateTime();
+    QDateTime startTime = endTime.addDays(-1);
+    
+    ui->dateTimeON->setDateTime(startTime);
+    ui->dateTimeOFF->setDateTime(endTime);
+    
+    // 自动触发查询
+    on_inquire_clicked();
+}
+
+// 最近三天查询按钮点击事件处理
+void Mysql::on_threeday_clicked()
+{
+    qDebug() << "[Mysql] 最近三天按钮被点击";
+    
+    QDateTime endTime = QDateTime::currentDateTime();
+    QDateTime startTime = endTime.addDays(-3);
+    
+    ui->dateTimeON->setDateTime(startTime);
+    ui->dateTimeOFF->setDateTime(endTime);
+    
+    // 自动触发查询
+    on_inquire_clicked();
+}
+
+// 最近一周查询按钮点击事件处理
+void Mysql::on_aweek_clicked()
+{
+    qDebug() << "[Mysql] 最近一周按钮被点击";
+    
+    QDateTime endTime = QDateTime::currentDateTime();
+    QDateTime startTime = endTime.addDays(-7);
+    
+    ui->dateTimeON->setDateTime(startTime);
+    ui->dateTimeOFF->setDateTime(endTime);
+    
+    // 自动触发查询
+    on_inquire_clicked();
+}
+
+// 值查询按钮点击事件处理
+void Mysql::on_dateinquire_clicked()
+{
+    qDebug() << "[Mysql] 值查询按钮被点击";
+    
+    // 获取用户选择的属性名称
+    QString attributeName = ui->comboBox->currentText();
+    
+    // 获取最小值和最大值
+    QString minValueStr = ui->min->text();
+    QString maxValueStr = ui->max->text();
+    
+    // 验证输入
+    bool minOk, maxOk;
+    double minValue = minValueStr.toDouble(&minOk);
+    double maxValue = maxValueStr.toDouble(&maxOk);
+    
+    if (!minOk || !maxOk) {
+        ui->status->setText("错误：请输入有效的数值");
+        ui->status->setStyleSheet("color: red;");
+        return;
+    }
+    
+    if (minValue > maxValue) {
+        ui->status->setText("错误：最小值不能大于最大值");
+        ui->status->setStyleSheet("color: red;");
+        return;
+    }
+    
+    // 使用数据库工作线程进行值范围查询
+    if (dbWorker && dbThread && dbThread->isRunning()) {
+        ui->status->setText(QString("正在查询%1在%2到%3之间的数据...")
+                                   .arg(attributeName)
+                                   .arg(minValue)
+                                   .arg(maxValue));
+        
+        // 使用信号槽机制调用数据库工作线程的查询方法
+        QMetaObject::invokeMethod(dbWorker, "queryGreenhouseDataByValueRange", 
+                                 Qt::QueuedConnection,
+                                 Q_ARG(QString, attributeName),
+                                 Q_ARG(double, minValue),
+                                 Q_ARG(double, maxValue));
+    } else {
+        ui->status->setText("数据库工作线程不可用");
+        ui->status->setStyleSheet("color: red;");
     }
 }

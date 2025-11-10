@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>890</width>
+    <width>698</width>
     <height>665</height>
    </rect>
   </property>
@@ -155,20 +155,6 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="1">
-         <widget class="QPushButton" name="dateinquire">
-          <property name="text">
-           <string>点击查询</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="label_6">
-          <property name="text">
-           <string>查询属性</string>
-          </property>
-         </widget>
-        </item>
         <item row="1" column="1">
          <widget class="QComboBox" name="comboBox">
           <item>
@@ -203,6 +189,23 @@
           </item>
          </widget>
         </item>
+        <item row="0" column="1">
+         <widget class="QPushButton" name="dateinquire">
+          <property name="text">
+           <string>点击查询</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_6">
+          <property name="text">
+           <string>查询属性</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QDoubleSpinBox" name="min"/>
+        </item>
         <item row="2" column="0">
          <widget class="QLabel" name="label_7">
           <property name="text">
@@ -210,8 +213,8 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
-         <widget class="QLineEdit" name="maxlineEdit"/>
+        <item row="3" column="1">
+         <widget class="QDoubleSpinBox" name="max"/>
         </item>
         <item row="3" column="0">
          <widget class="QLabel" name="label_8">
@@ -219,9 +222,6 @@
            <string>最大值</string>
           </property>
          </widget>
-        </item>
-        <item row="3" column="1">
-         <widget class="QLineEdit" name="lineEdit_2"/>
         </item>
        </layout>
       </widget>

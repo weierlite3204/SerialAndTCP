@@ -13,12 +13,12 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDateTimeEdit>
+#include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
-#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QTableWidget>
 #include <QtWidgets/QVBoxLayout>
@@ -54,19 +54,19 @@ public:
     QFrame *frame_2;
     QGridLayout *gridLayout_2;
     QLabel *label_5;
+    QComboBox *comboBox;
     QPushButton *dateinquire;
     QLabel *label_6;
-    QComboBox *comboBox;
+    QDoubleSpinBox *min;
     QLabel *label_7;
-    QLineEdit *maxlineEdit;
+    QDoubleSpinBox *max;
     QLabel *label_8;
-    QLineEdit *lineEdit_2;
 
     void setupUi(QWidget *Mysql)
     {
         if (Mysql->objectName().isEmpty())
             Mysql->setObjectName("Mysql");
-        Mysql->resize(890, 665);
+        Mysql->resize(698, 665);
         verticalLayout_4 = new QVBoxLayout(Mysql);
         verticalLayout_4->setObjectName("verticalLayout_4");
         status = new QLabel(Mysql);
@@ -183,16 +183,6 @@ public:
 
         gridLayout_2->addWidget(label_5, 0, 0, 1, 1);
 
-        dateinquire = new QPushButton(frame_2);
-        dateinquire->setObjectName("dateinquire");
-
-        gridLayout_2->addWidget(dateinquire, 0, 1, 1, 1);
-
-        label_6 = new QLabel(frame_2);
-        label_6->setObjectName("label_6");
-
-        gridLayout_2->addWidget(label_6, 1, 0, 1, 1);
-
         comboBox = new QComboBox(frame_2);
         comboBox->addItem(QString());
         comboBox->addItem(QString());
@@ -204,25 +194,35 @@ public:
 
         gridLayout_2->addWidget(comboBox, 1, 1, 1, 1);
 
+        dateinquire = new QPushButton(frame_2);
+        dateinquire->setObjectName("dateinquire");
+
+        gridLayout_2->addWidget(dateinquire, 0, 1, 1, 1);
+
+        label_6 = new QLabel(frame_2);
+        label_6->setObjectName("label_6");
+
+        gridLayout_2->addWidget(label_6, 1, 0, 1, 1);
+
+        min = new QDoubleSpinBox(frame_2);
+        min->setObjectName("min");
+
+        gridLayout_2->addWidget(min, 2, 1, 1, 1);
+
         label_7 = new QLabel(frame_2);
         label_7->setObjectName("label_7");
 
         gridLayout_2->addWidget(label_7, 2, 0, 1, 1);
 
-        maxlineEdit = new QLineEdit(frame_2);
-        maxlineEdit->setObjectName("maxlineEdit");
+        max = new QDoubleSpinBox(frame_2);
+        max->setObjectName("max");
 
-        gridLayout_2->addWidget(maxlineEdit, 2, 1, 1, 1);
+        gridLayout_2->addWidget(max, 3, 1, 1, 1);
 
         label_8 = new QLabel(frame_2);
         label_8->setObjectName("label_8");
 
         gridLayout_2->addWidget(label_8, 3, 0, 1, 1);
-
-        lineEdit_2 = new QLineEdit(frame_2);
-        lineEdit_2->setObjectName("lineEdit_2");
-
-        gridLayout_2->addWidget(lineEdit_2, 3, 1, 1, 1);
 
 
         horizontalLayout->addWidget(frame_2);
@@ -252,8 +252,6 @@ public:
         deleteall->setText(QCoreApplication::translate("Mysql", "\346\270\205\347\251\272\346\225\260\346\215\256", nullptr));
         showall->setText(QCoreApplication::translate("Mysql", "\346\230\276\347\244\272\346\211\200\346\234\211\346\225\260\346\215\256", nullptr));
         label_5->setText(QCoreApplication::translate("Mysql", "\345\200\274\346\237\245\350\257\242", nullptr));
-        dateinquire->setText(QCoreApplication::translate("Mysql", "\347\202\271\345\207\273\346\237\245\350\257\242", nullptr));
-        label_6->setText(QCoreApplication::translate("Mysql", "\346\237\245\350\257\242\345\261\236\346\200\247", nullptr));
         comboBox->setItemText(0, QCoreApplication::translate("Mysql", "\347\251\272\346\260\224\346\270\251\345\272\246", nullptr));
         comboBox->setItemText(1, QCoreApplication::translate("Mysql", "\347\251\272\346\260\224\347\233\270\345\257\271\346\271\277\345\272\246", nullptr));
         comboBox->setItemText(2, QCoreApplication::translate("Mysql", "\346\260\247\346\260\224\346\265\223\345\272\246", nullptr));
@@ -261,6 +259,8 @@ public:
         comboBox->setItemText(4, QCoreApplication::translate("Mysql", "\345\234\237\345\243\244\345\220\253\346\260\264\351\207\217", nullptr));
         comboBox->setItemText(5, QCoreApplication::translate("Mysql", "\345\205\211\347\205\247\345\274\272\345\272\246", nullptr));
 
+        dateinquire->setText(QCoreApplication::translate("Mysql", "\347\202\271\345\207\273\346\237\245\350\257\242", nullptr));
+        label_6->setText(QCoreApplication::translate("Mysql", "\346\237\245\350\257\242\345\261\236\346\200\247", nullptr));
         label_7->setText(QCoreApplication::translate("Mysql", "\346\234\200\345\260\217\345\200\274", nullptr));
         label_8->setText(QCoreApplication::translate("Mysql", "\346\234\200\345\244\247\345\200\274", nullptr));
     } // retranslateUi

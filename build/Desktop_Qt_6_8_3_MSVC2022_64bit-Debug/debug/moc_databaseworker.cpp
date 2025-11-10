@@ -56,7 +56,14 @@ static constexpr auto qt_meta_stringdata_ZN14DatabaseWorkerE = QtMocHelpers::str
     "soilTemp",
     "soilHumidity",
     "lightIntensity",
-    "queryAllGreenhouseData"
+    "queryAllGreenhouseData",
+    "queryGreenhouseDataByTimeRange",
+    "startTime",
+    "endTime",
+    "queryGreenhouseDataByValueRange",
+    "attributeName",
+    "minValue",
+    "maxValue"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -68,7 +75,7 @@ Q_CONSTINIT static const uint qt_meta_data_ZN14DatabaseWorkerE[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
+       8,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -76,14 +83,16 @@ Q_CONSTINIT static const uint qt_meta_data_ZN14DatabaseWorkerE[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    2,   50,    2, 0x06,    1 /* Public */,
-       5,    3,   55,    2, 0x06,    4 /* Public */,
+       1,    2,   62,    2, 0x06,    1 /* Public */,
+       5,    3,   67,    2, 0x06,    4 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       9,    0,   62,    2, 0x0a,    8 /* Public */,
-      10,    0,   63,    2, 0x0a,    9 /* Public */,
-      11,    6,   64,    2, 0x0a,   10 /* Public */,
-      18,    0,   77,    2, 0x0a,   17 /* Public */,
+       9,    0,   74,    2, 0x0a,    8 /* Public */,
+      10,    0,   75,    2, 0x0a,    9 /* Public */,
+      11,    6,   76,    2, 0x0a,   10 /* Public */,
+      18,    0,   89,    2, 0x0a,   17 /* Public */,
+      19,    2,   90,    2, 0x0a,   18 /* Public */,
+      22,    3,   95,    2, 0x0a,   21 /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Bool, QMetaType::QString,    3,    4,
@@ -94,6 +103,8 @@ Q_CONSTINIT static const uint qt_meta_data_ZN14DatabaseWorkerE[] = {
     QMetaType::Void,
     QMetaType::Void, QMetaType::Double, QMetaType::Double, QMetaType::Double, QMetaType::Double, QMetaType::Double, QMetaType::Double,   12,   13,   14,   15,   16,   17,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::QDateTime, QMetaType::QDateTime,   20,   21,
+    QMetaType::Void, QMetaType::QString, QMetaType::Double, QMetaType::Double,   23,   24,   25,
 
        0        // eod
 };
@@ -129,7 +140,16 @@ Q_CONSTINIT const QMetaObject DatabaseWorker::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<double, std::false_type>,
         QtPrivate::TypeAndForceComplete<double, std::false_type>,
         // method 'queryAllGreenhouseData'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'queryGreenhouseDataByTimeRange'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<const QDateTime &, std::false_type>,
+        QtPrivate::TypeAndForceComplete<const QDateTime &, std::false_type>,
+        // method 'queryGreenhouseDataByValueRange'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<const QString &, std::false_type>,
+        QtPrivate::TypeAndForceComplete<double, std::false_type>,
+        QtPrivate::TypeAndForceComplete<double, std::false_type>
     >,
     nullptr
 } };
@@ -145,6 +165,8 @@ void DatabaseWorker::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         case 3: _t->disconnectFromDatabase(); break;
         case 4: _t->storeGreenhouseData((*reinterpret_cast< std::add_pointer_t<double>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<double>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<double>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<double>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<double>>(_a[5])),(*reinterpret_cast< std::add_pointer_t<double>>(_a[6]))); break;
         case 5: _t->queryAllGreenhouseData(); break;
+        case 6: _t->queryGreenhouseDataByTimeRange((*reinterpret_cast< std::add_pointer_t<QDateTime>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QDateTime>>(_a[2]))); break;
+        case 7: _t->queryGreenhouseDataByValueRange((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<double>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<double>>(_a[3]))); break;
         default: ;
         }
     }
@@ -186,14 +208,14 @@ int DatabaseWorker::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 6)
+        if (_id < 8)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 8;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 6)
+        if (_id < 8)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 6;
+        _id -= 8;
     }
     return _id;
 }

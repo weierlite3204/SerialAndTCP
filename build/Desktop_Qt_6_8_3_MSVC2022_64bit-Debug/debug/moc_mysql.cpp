@@ -50,7 +50,14 @@ static constexpr auto qt_meta_stringdata_ZN5MysqlE = QtMocHelpers::stringData(
     "QList<QVariantList>",
     "results",
     "on_exit_clicked",
-    "on_showall_clicked"
+    "on_showall_clicked",
+    "on_deleteall_clicked",
+    "on_inquire_clicked",
+    "on_nowtime_clicked",
+    "on_oneday_clicked",
+    "on_threeday_clicked",
+    "on_aweek_clicked",
+    "on_dateinquire_clicked"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -62,7 +69,7 @@ Q_CONSTINIT static const uint qt_meta_data_ZN5MysqlE[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
+      13,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -70,14 +77,21 @@ Q_CONSTINIT static const uint qt_meta_data_ZN5MysqlE[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   50,    2, 0x06,    1 /* Public */,
-       3,    0,   51,    2, 0x06,    2 /* Public */,
+       1,    0,   92,    2, 0x06,    1 /* Public */,
+       3,    0,   93,    2, 0x06,    2 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       4,    2,   52,    2, 0x08,    3 /* Private */,
-       7,    3,   57,    2, 0x08,    6 /* Private */,
-      11,    0,   64,    2, 0x08,   10 /* Private */,
-      12,    0,   65,    2, 0x08,   11 /* Private */,
+       4,    2,   94,    2, 0x08,    3 /* Private */,
+       7,    3,   99,    2, 0x08,    6 /* Private */,
+      11,    0,  106,    2, 0x08,   10 /* Private */,
+      12,    0,  107,    2, 0x08,   11 /* Private */,
+      13,    0,  108,    2, 0x08,   12 /* Private */,
+      14,    0,  109,    2, 0x08,   13 /* Private */,
+      15,    0,  110,    2, 0x08,   14 /* Private */,
+      16,    0,  111,    2, 0x08,   15 /* Private */,
+      17,    0,  112,    2, 0x08,   16 /* Private */,
+      18,    0,  113,    2, 0x08,   17 /* Private */,
+      19,    0,  114,    2, 0x08,   18 /* Private */,
 
  // signals: parameters
     QMetaType::Void,
@@ -86,6 +100,13 @@ Q_CONSTINIT static const uint qt_meta_data_ZN5MysqlE[] = {
  // slots: parameters
     QMetaType::Void, QMetaType::Bool, QMetaType::QString,    5,    6,
     QMetaType::Void, QMetaType::Bool, 0x80000000 | 9, QMetaType::QString,    8,   10,    6,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
 
@@ -117,6 +138,20 @@ Q_CONSTINIT const QMetaObject Mysql::staticMetaObject = { {
         // method 'on_exit_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_showall_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_deleteall_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_inquire_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_nowtime_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_oneday_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_threeday_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_aweek_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_dateinquire_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
@@ -133,6 +168,13 @@ void Mysql::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void 
         case 3: _t->on_queryResultsReady((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QList<QVariantList>>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[3]))); break;
         case 4: _t->on_exit_clicked(); break;
         case 5: _t->on_showall_clicked(); break;
+        case 6: _t->on_deleteall_clicked(); break;
+        case 7: _t->on_inquire_clicked(); break;
+        case 8: _t->on_nowtime_clicked(); break;
+        case 9: _t->on_oneday_clicked(); break;
+        case 10: _t->on_threeday_clicked(); break;
+        case 11: _t->on_aweek_clicked(); break;
+        case 12: _t->on_dateinquire_clicked(); break;
         default: ;
         }
     }
@@ -174,14 +216,14 @@ int Mysql::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 6)
+        if (_id < 13)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 13;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 6)
+        if (_id < 13)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 6;
+        _id -= 13;
     }
     return _id;
 }

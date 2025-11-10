@@ -35,18 +35,19 @@ void MsgWorker::run()
         qDebug()<<"--------------数据到达"<<'\n';
         msgreaddata(msgsocket);
     },Qt::DirectConnection);
-    connect(msgsocket, &QTcpSocket::disconnected,this, [this](){
-        qDebug()<<"线程结束-------------"<<'\n';
-        quit();// 终止事件循环，让run()退出
-        emit deletethread();// 通知主线程销毁线程对象
-    },Qt::DirectConnection);
-    exec();//开始事件循环
     // 添加errorOccurred信号处理，确保异常断开时也能触发线程销毁流程
     connect(msgsocket, &QTcpSocket::errorOccurred, this, [this](QAbstractSocket::SocketError){
         qDebug()<<"socket错误："<<msgsocket->errorString();
         quit();
         emit deletethread();
     }, Qt::DirectConnection);
+    connect(msgsocket, &QTcpSocket::disconnected,this, [this](){
+        qDebug()<<"线程结束-------------"<<'\n';
+        quit();// 终止事件循环，让run()退出
+        emit deletethread();// 通知主线程销毁线程对象
+    },Qt::DirectConnection);
+    exec();//开始事件循环
+
 }
 
 //接收下位机传来的数据

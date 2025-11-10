@@ -138,7 +138,6 @@ void Widget::init()
     // 创建MySQL窗口并显示以确保数据库连接建立
     mysqldb = new Mysql();
     mysqldb->setAttribute(Qt::WA_DeleteOnClose, false); // 关闭时不自动删除
-    mysqldb->show(); // 自动显示数据库窗口，建立连接
     
     msgserver=new MyTcpServer(this);//创建Tcp服务器对象
     //QHostAddress::Any //双栈任意地址。以这种地址绑定的套接字将同时监听两个端口。 一。
@@ -537,6 +536,11 @@ void Widget::on_mysqlbtn_clicked()
         mysqldb->raise();
         mysqldb->activateWindow();
     }
+}
+
+void Widget::on_exportbtn_clicked()
+{
+
 }
 
 Widget::~Widget()

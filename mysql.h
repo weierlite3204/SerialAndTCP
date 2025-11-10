@@ -1,4 +1,4 @@
-﻿#ifndef MYSQL_H
+#ifndef MYSQL_H
 #define MYSQL_H
 
 #include <QWidget>   // Qt窗口基类
@@ -66,9 +66,15 @@ private slots:
     // 处理查询结果
     void on_queryResultsReady(bool success, const QList<QVariantList> &results, const QString &message);
     
-
     void on_exit_clicked();//处理退出按钮点击事件的槽函数
     void on_showall_clicked();//显示所有数据按钮
+    void on_deleteall_clicked();//将表格里面的数据清空
+    void on_inquire_clicked();//查询按钮点击事件处理
+    void on_nowtime_clicked();//现在时间按钮点击事件处理
+    void on_oneday_clicked();//最近一天查询按钮点击事件处理
+    void on_threeday_clicked();//最近三天查询按钮点击事件处理
+    void on_aweek_clicked();//最近一周查询按钮点击事件处理
+    void on_dateinquire_clicked();//值查询按钮点击事件处理
 };
 
 #endif // MYSQL_H
